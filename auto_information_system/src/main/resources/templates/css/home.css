@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #0066cc;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.logo img {
+    width: 300px; /* Установите ширину */
+    height: 150px; /* Установите высоту */
+    object-fit: cover; /* Сохранение пропорций логотипа */
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.btn {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #005f73;
+}
+
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+.welcome {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+h1 {
+    margin: 0 0 20px;
+}
