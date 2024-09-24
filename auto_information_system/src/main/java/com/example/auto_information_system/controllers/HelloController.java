@@ -3,18 +3,33 @@ package com.example.auto_information_system.controllers;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import org.hibernate.mapping.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.auto_information_system.model.Users;
+import com.example.auto_information_system.service.UsersService;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 
 @Controller
 public class HelloController {
     
+    @Autowired
+    private UsersService usersService;
+
     @GetMapping("/home")
     public String homePage() {
         return "html/home.html";
@@ -46,5 +61,27 @@ public class HelloController {
     public String loginCSS() {
         return "css/login.css";
     }
-    
+    @GetMapping("/register")
+    public String registerPage() {
+        return "html/register.html";
+    }
+    @GetMapping("/css/register.css")
+    public String registerCSS() {
+        return "css/register.css";
+    }
+    @GetMapping("/JavaScript/register.js")
+    public String registerJS() {
+        return "JavaScript/register.js";
+    }
+    @PostMapping("/register")
+    public ResponseEntity<?> postMethodName(@RequestBody Users entity) {
+        try {
+            usersService.addUser(entity);
+            return ResponseEntity.ok(Collections.singletonMap("message", "Пользователь успешно зарегистрирован!"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при регистрации");
+        }
+    }
 }
+    
+

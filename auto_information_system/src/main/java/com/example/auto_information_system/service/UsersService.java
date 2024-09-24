@@ -34,9 +34,19 @@ public class UsersService implements UserDetailsService {
             authority = new SimpleGrantedAuthority("ROLE_USER");
         }
         return new org.springframework.security.core.userdetails.User(
-            user.getUser_login(),
+            user.getUsername(),
             user.getUser_password(),
             Collections.singletonList(authority)
         );
+    }
+    public void addUser(Users user) {
+        if (usersRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalStateException("Username already taken");
+        } 
+        else{
+            user.setRole_id(1);
+            usersRepository.save(user);  
+        } 
+        
     }
 }

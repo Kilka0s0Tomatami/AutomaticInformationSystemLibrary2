@@ -2,11 +2,14 @@ package com.example.auto_information_system.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Users {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
     @Column(name = "user_login")
     private String username;
@@ -27,10 +30,10 @@ public class Users {
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
-    public String getUser_login() {
+    public String getUsername() {
         return username;
     }
-    public void setUser_login(String user_login) {
+    public void setUsername(String user_login) {
         this.username = user_login;
     }
     public String getUser_password() {
@@ -41,5 +44,8 @@ public class Users {
     }
     public int getRole_id() {
         return role_id;
+    }
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
 }
