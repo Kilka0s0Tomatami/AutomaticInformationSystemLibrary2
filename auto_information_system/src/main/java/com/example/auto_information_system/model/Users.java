@@ -11,11 +11,12 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
-    @Column(name = "user_login")
-    private String username;
+    @Column(name = "user_login") // указывает на название столбца в базе данных
+    private String username;     // такое имя необходимо для правильной работы jpa и spring security
     private String user_password;
     private int role_id;
 
+    //конструкторы
     public Users() {}
     public Users(int user_id, String user_login, String user_password, int role_id) {
         this.user_id = user_id;
@@ -24,6 +25,7 @@ public class Users {
         this.role_id = role_id;
     }
 
+    //гетеры и сеттеры
     public int getUser_id() {
         return user_id;
     }

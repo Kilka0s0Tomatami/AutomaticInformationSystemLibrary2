@@ -30,9 +30,14 @@ public class UsersService implements UserDetailsService {
         SimpleGrantedAuthority authority;
         if (user.getRole_id() == 2) {
             authority = new SimpleGrantedAuthority("ROLE_ADMIN");
-        } else {
+        } 
+        else if (user.getRole_id() == 1) {
             authority = new SimpleGrantedAuthority("ROLE_USER");
         }
+        else{
+            authority = new SimpleGrantedAuthority("ROLE_LIBRARIAN");
+        }
+
         return new org.springframework.security.core.userdetails.User(
             user.getUsername(),
             user.getUser_password(),
