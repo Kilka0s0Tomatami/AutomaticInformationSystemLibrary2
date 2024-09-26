@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,10 +32,29 @@ public class HelloController {
     @Autowired
     private UsersService usersService;
 
-    @GetMapping("/home")
-    public String homePage() {
-        return "html/home.html";
+    @GetMapping("/")
+    public String dashboard(Authentication authentication, Model model) {
+        if (authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            // Если пользователь имеет роль администратора
+            return "html/admin-dashboard.html";
+        }
+        else if (authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"))) {
+            return "html/user-dashboard.html";
+        } 
+        else if (authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+            return "html/user-dashboard.html";
+        } 
+        else {
+            // Если обычный пользователь
+             return "html/home.html";
+        }
     }
+
+
+   
     @GetMapping("/css/home.css")
     public String homeCss() {
         return "css/home.css";

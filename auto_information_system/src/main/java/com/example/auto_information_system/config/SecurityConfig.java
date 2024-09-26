@@ -33,7 +33,7 @@ public class SecurityConfig {
                 // Доступ к API только для пользователей с ролью ADMIN
                 .requestMatchers("/apig/**").hasRole("ADMIN")
                 // Доступ ко всем остальным страницам только для авторизованных пользователей
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 
             )
             .exceptionHandling(exceptions -> exceptions
@@ -45,7 +45,7 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login") // Указываем собственную страницу логина
-                .defaultSuccessUrl("/home", true)
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             )
             .logout(logout -> logout

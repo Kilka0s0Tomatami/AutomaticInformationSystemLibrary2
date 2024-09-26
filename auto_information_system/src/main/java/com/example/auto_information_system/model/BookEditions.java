@@ -7,8 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 @Entity
-@Table(name = "book_edition")
-public class BookEdition {
+@Table(name = "book_editions")
+public class BookEditions {
     /*столбцы таблицы book_edition */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //вроде отдаёт управление генерацией бд / или автоинкрементн
@@ -31,8 +31,8 @@ public class BookEdition {
     private String book_edition_bbk_number;
 
 //конструкторы
-    public BookEdition() {};
-    public BookEdition(String book_edition_title, String book_edition_author,
+    public BookEditions() {};
+    public BookEditions(String book_edition_title, String book_edition_author,
                          int book_edition_year_publication, String book_edition_place_publication, 
                          String book_edition_udk_number, String book_edition_bbk_number) 
     {
