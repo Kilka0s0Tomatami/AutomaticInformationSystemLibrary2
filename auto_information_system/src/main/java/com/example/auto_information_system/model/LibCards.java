@@ -13,8 +13,8 @@ public class LibCards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int lib_card_id;
-    @Column(nullable = false)
-    private int user_id;
+    @Column(nullable = false, name = "user_id")
+    private int userId;
     @Column(nullable = false)
     private String lib_card_first_name;
     @Column(nullable = false)
@@ -27,7 +27,7 @@ public class LibCards {
     public LibCards(){};
     public LibCards(int user_id, String lib_card_first_name,String lib_card_second_name, String lib_card_father_name,
                     int lib_card_mobilephone_number, int lib_card_homephone_number){
-    this.user_id=user_id;
+    this.userId=user_id;
     this.lib_card_first_name = lib_card_first_name;
     this.lib_card_second_name = lib_card_second_name;
     this.lib_card_father_name = lib_card_father_name;
@@ -36,14 +36,14 @@ public class LibCards {
     }
 
     //гетеры и сеттеры
-    public int getLibCardsId(){
+    public int getLib_card_id(){
         return this.lib_card_id;
     }
     public int getUser_id(){
-        return this.user_id;
+        return this.userId;
     }
     public void setUser_id(int user_id){
-        this.user_id=user_id;
+        this.userId=user_id;
     }
     public String getLib_card_first_name(){
         return this.lib_card_first_name;

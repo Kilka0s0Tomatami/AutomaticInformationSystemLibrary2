@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 import com.example.auto_information_system.model.Users;
+import com.example.auto_information_system.service.CustomUserDetails;
+import com.example.auto_information_system.service.LibCardsService;
 import com.example.auto_information_system.service.UsersService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,30 +32,51 @@ public class HelloController {
     
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private LibCardsService libCardsService;
 
     @GetMapping("/")
-    public String dashboard(Authentication authentication, Model model) {
-        if (authentication != null && authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-            // Если пользователь имеет роль администратора
-            return "html/admin-dashboard.html";
+    public String home(Authentication authentication, Model model) {
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            // Получаем кастомный объект пользователя
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Integer userId = userDetails.getId(); // Получаем ID пользователя
+
+            // Логика для ролей
+            if (authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return "html/admin-dashboard.html";
+            }
+            else if (authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"))) {
+                return "html/user-dashboard.html";
+            }
+            else if (authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+                if (libCardsService.findByUserId(userId).isPresent()) {
+                    return "html/userHaveCardHomePage.html";
+                }
+                else
+                return "html/user-dashboard.html";
+            }
         }
-        else if (authentication != null && authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"))) {
-            return "html/user-dashboard.html";
-        } 
-        else if (authentication != null && authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
-            return "html/user-dashboard.html";
-        } 
-        else {
-            // Если обычный пользователь
-             return "html/home.html";
+        return "html/home.html";
+    }
+    @PostMapping("/register")
+    public ResponseEntity<?> postMethodName(@RequestBody Users entity) {
+        try {
+            usersService.addUser(entity);
+            return ResponseEntity.ok(Collections.singletonMap("message", "Пользователь успешно зарегистрирован!"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при регистрации");
         }
     }
-
-
+    @GetMapping("/login")
+    public String loginPage() {
+        return "html/login.html";
+    }
    
+
     @GetMapping("/css/home.css")
     public String homeCss() {
         return "css/home.css";
@@ -73,10 +96,7 @@ public class HelloController {
         } 
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "html/login.html";
-    }
+    
     @GetMapping("/css/login.css")
     public String loginCSS() {
         return "css/login.css";
@@ -93,15 +113,16 @@ public class HelloController {
     public String registerJS() {
         return "JavaScript/register.js";
     }
-    @PostMapping("/register")
-    public ResponseEntity<?> postMethodName(@RequestBody Users entity) {
-        try {
-            usersService.addUser(entity);
-            return ResponseEntity.ok(Collections.singletonMap("message", "Пользователь успешно зарегистрирован!"));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при регистрации");
-        }
+    @GetMapping("/css/userHaveCardHomePage.css")
+    public String userHaveCardHomePageCSS() {
+        return "css/userHaveCardHomePage.css";
     }
+    @GetMapping("/JavaScript/userHaveCardHomePage.js")
+    public String userHaveCardHomePageJS() {
+        return "JavaScript/userHaveCardHomePage.js";
+    }
+    
+
 }
     
 

@@ -10,6 +10,7 @@ import com.example.auto_information_system.model.LibCards;
 import com.example.auto_information_system.repo.LibCardsRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibCardsService {
@@ -30,5 +31,9 @@ public class LibCardsService {
 
     public void deleteLibCard(Integer id) {
         libCardsRepository.deleteById(id);
+    }
+
+    public Optional<LibCards> findByUserId(Integer UserId) {
+        return libCardsRepository.findByUserId(UserId);
     }
 }
