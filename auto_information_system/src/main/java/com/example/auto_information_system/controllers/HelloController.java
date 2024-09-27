@@ -3,7 +3,7 @@ package com.example.auto_information_system.controllers;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import org.hibernate.mapping.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,8 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
 
 import com.example.auto_information_system.model.Users;
 import com.example.auto_information_system.service.UsersService;
@@ -23,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Collections;
-import java.util.stream.Collectors;
+
 
 
 @Controller

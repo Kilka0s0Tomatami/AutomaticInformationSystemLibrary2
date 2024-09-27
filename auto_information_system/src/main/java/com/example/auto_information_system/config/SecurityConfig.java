@@ -5,14 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 @Configuration
 public class SecurityConfig {
@@ -31,7 +29,7 @@ public class SecurityConfig {
                 // Разрешаем доступ к статическим ресурсам и страницам регистрации
                 .requestMatchers("/", "/home", "/register", "/css/**", "/JavaScript/**", "/images/**").permitAll()
                 // Доступ к API только для пользователей с ролью ADMIN
-                .requestMatchers("/apig/**").hasRole("ADMIN")
+                .requestMatchers("/api/test/**").hasRole("ADMIN")
                 // Доступ ко всем остальным страницам только для авторизованных пользователей
                 .anyRequest().permitAll()
                 

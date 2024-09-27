@@ -20,7 +20,60 @@ public class LibCards {
     @Column(nullable = false)
     private String lib_card_second_name;
     private String lib_card_father_name;
-    private int lib_card_mobilephone_numner;
+    private int lib_card_mobilephone_number;
     private int lib_card_homephone_number;
+
+    //конструкторы
+    public LibCards(){};
+    public LibCards(int user_id, String lib_card_first_name,String lib_card_second_name, String lib_card_father_name,
+                    int lib_card_mobilephone_number, int lib_card_homephone_number){
+    this.user_id=user_id;
+    this.lib_card_first_name = lib_card_first_name;
+    this.lib_card_second_name = lib_card_second_name;
+    this.lib_card_father_name = lib_card_father_name;
+    this.lib_card_mobilephone_number = lib_card_mobilephone_number;
+    this.lib_card_homephone_number =lib_card_homephone_number;                   
+    }
+
+    //гетеры и сеттеры
+    public int getLibCardsId(){
+        return this.lib_card_id;
+    }
+    public int getUser_id(){
+        return this.user_id;
+    }
+    public void setUser_id(int user_id){
+        this.user_id=user_id;
+    }
+    public String getLib_card_first_name(){
+        return this.lib_card_first_name;
+    }
+    public void setLib_card_first_name(String LibCardFirstName){
+        this.lib_card_first_name = LibCardFirstName;
+    }
+    public String getLib_card_second_name(){
+        return this.lib_card_second_name;
+    }
+    public void setLib_card_second_name(String LibCardSecondName){
+        this.lib_card_second_name = LibCardSecondName;
+    }
+    public String getLib_card_father_name(){
+        return this.lib_card_father_name;
+    }
+    public void setLib_card_father_name(String LibCardFatherName){
+        this.lib_card_father_name = LibCardFatherName;
+    }
+    public int getLib_card_mobilephone_number(){
+        return this.lib_card_mobilephone_number;
+    }
+    public void setLib_card_mobilephone_number(int lib_card_mobilephone_number ){
+        this.lib_card_mobilephone_number = lib_card_mobilephone_number;
+    }
+    public int getLib_card_homephone_number(){
+        return this.lib_card_homephone_number;
+    }
+    public void setLib_card_homephone_number(int lib_card_homephone_number ){
+        this.lib_card_homephone_number = lib_card_homephone_number;
+    }
 }
 
