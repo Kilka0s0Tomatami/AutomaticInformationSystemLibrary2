@@ -15,10 +15,11 @@ public class BookCopies {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int book_copy_id;
 
-    @Column(nullable = false)
-    private int book_edition_id;
+    @Column(nullable = false, name = "book_edition_id")
+    private int bookEditionId;
 
-    private int book_copy_status;
+    @Column(name = "book_copy_status")
+    private int bookCopyStatus;
 
     @Column(nullable = false)
     private int book_copy_fond_number;
@@ -29,8 +30,8 @@ public class BookCopies {
     }
 
     public BookCopies(int book_edition_id, int book_copy_status, int book_copy_fond_number) {
-        this.book_edition_id = book_edition_id;
-        this.book_copy_status = book_copy_status;
+        this.bookEditionId = book_edition_id;
+        this.bookCopyStatus = book_copy_status;
         this.book_copy_fond_number = book_copy_fond_number;
     }
 
@@ -44,20 +45,20 @@ public class BookCopies {
         this.book_copy_id = book_copy_id;
     }
 
-    public int getBook_edition_id() {
-        return book_edition_id;
+    public int getBookEditionId() {
+        return bookEditionId;
     }
 
-    public void setBook_edition_id(int book_edition_id) {
-        this.book_edition_id = book_edition_id;
+    public void setBookEditionId(int book_edition_id) {
+        this.bookEditionId = book_edition_id;
     }   
 
-    public int getBook_copy_status() {
-        return book_copy_status;
+    public int getBookCopyStatus() {
+        return bookCopyStatus;
     }
 
-    public void setBook_copy_status(int book_copy_status) {
-        this.book_copy_status = book_copy_status;
+    public void setBookCopyStatus(int book_copy_status) {
+        this.bookCopyStatus = book_copy_status;
     }
 
     public int getBook_copy_fond_number() {

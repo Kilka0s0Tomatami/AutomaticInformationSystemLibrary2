@@ -10,8 +10,8 @@ import jakarta.persistence.Table;
 public class BooksOnHands {
     @Id
     private int book_copy_id;
-    @Column(nullable = false)
-    private int lib_card_id;
+    @Column(nullable = false, name = "lib_card_id")
+    private int libCardId;
     @Column(nullable = false)
     private java.sql.Date issue_date;
     @Column(nullable = false)
@@ -23,7 +23,7 @@ public class BooksOnHands {
 
     public BooksOnHands(int book_copy_id, int lib_card_id, java.sql.Date issue_date, java.sql.Date return_date, java.sql.Date refund_date) {
         this.book_copy_id = book_copy_id;
-        this.lib_card_id = lib_card_id;
+        this.libCardId = lib_card_id;
         this.issue_date = issue_date;
         this.return_date = return_date;
         this.refund_date = refund_date;
@@ -37,12 +37,12 @@ public class BooksOnHands {
         this.book_copy_id = book_copy_id;
     }
 
-    public int getLib_card_id() {
-        return lib_card_id;
+    public int getLibCardId() {
+        return libCardId;
     }
 
-    public void setLib_card_id(int lib_card_id) {
-        this.lib_card_id = lib_card_id;
+    public void setLibCardId(int lib_card_id) {
+        this.libCardId = lib_card_id;
     }
 
     public java.sql.Date getIssue_date() {

@@ -11,7 +11,8 @@ import com.example.auto_information_system.model.BookEditions;
 
 @Repository
 public interface BookEditionRepository extends JpaRepository<BookEditions, Integer> {
-    
+   
+   
     @Query("SELECT b FROM BookEditions b WHERE b.book_edition_author = :author")
     public List<BookEditions> findByBookEditionAuthor(@Param("author") String bookEditionAuthor);
 

@@ -25,12 +25,9 @@ public class UserController {
     public String reserveBook() {
         return "html/reserveBook.html";
     }
-    @PostMapping("/user/reserveBook/{id}")
-    public ResponseEntity<HttpStatus> reserve(@PathVariable Integer id) {
-
-
-        
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/receivedBooks")
+    public String receivedBooks() {
+        return "html/receivedBooks.html";
     }
 
 
@@ -43,5 +40,14 @@ public class UserController {
     @GetMapping("/JavaScript/reserveBook.js")
     public String reserveBookJs() {
         return "JavaScript/reserveBook.js";
+    }
+
+    @GetMapping("/css/receivedBooks.css")
+    public String receivedBooksCss() {
+        return "css/receivedBooks.css";
+    }
+    @GetMapping("/JavaScript/receivedBooks.js")
+    public String receivedBooksJs() {
+        return "JavaScript/receivedBooks.js";
     }
 }

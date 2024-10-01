@@ -43,7 +43,7 @@ document
                     <p><strong>Место издания:</strong> ${book.book_edition_place_publication}</p>
                     <p><strong>УДК:</strong> ${book.book_edition_udk_number}</p>
                     <p><strong>ББК:</strong> ${book.book_edition_bbk_number}</p>
-                    <button onclick="reserveBook(${book.book_edition_id})">Удалить</button>
+                    <button onclick="reserveBook(${book.book_edition_id})">Забронировать</button>
                     <hr>
                 `
 						resultsDiv.appendChild(bookElement)
@@ -60,7 +60,7 @@ document
 			})
 	})
 function reserveBook(id) {
-	fetch(`/api/books/${id}`, {
+	fetch(`/user/reserveBooks/${id}`, {
 		method: 'POST',
 	}).then(response => {
 		if (response.ok) {
