@@ -3,15 +3,13 @@ package com.example.auto_information_system.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.auto_information_system.model.BookCopies;
-import com.example.auto_information_system.model.BookEditions;
+
 import com.example.auto_information_system.model.BooksOnHands;
 import com.example.auto_information_system.repo.BooksOnHandsRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 @Service
 public class BooksOnHandsService {

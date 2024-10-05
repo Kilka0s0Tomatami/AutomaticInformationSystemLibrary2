@@ -14,6 +14,7 @@ import com.example.auto_information_system.repo.UsersRepository;
 public class UsersService implements UserDetailsService {
    @Autowired
    private UsersRepository usersRepository;
+    
 
    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
