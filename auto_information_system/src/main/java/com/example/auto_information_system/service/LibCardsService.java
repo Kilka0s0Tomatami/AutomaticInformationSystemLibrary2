@@ -36,4 +36,13 @@ public class LibCardsService {
     public Optional<LibCards> findByUserId(Integer UserId) {
         return libCardsRepository.findByUserId(UserId);
     }
+    public void updateLibCard(LibCards card) {
+        LibCards updCard = libCardsRepository.findById(card.getLib_card_id()).orElse(null);
+        updCard.setLib_card_first_name(card.getLib_card_first_name());
+        updCard.setLib_card_second_name(card.getLib_card_second_name());
+        updCard.setLib_card_father_name(card.getLib_card_father_name());
+        updCard.setLib_card_mobilephone_number(card.getLib_card_mobilephone_number());
+        updCard.setLib_card_homephone_number(card.getLib_card_homephone_number());
+        libCardsRepository.save(updCard);
+    }
 }

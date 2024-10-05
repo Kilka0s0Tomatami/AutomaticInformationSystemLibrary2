@@ -24,6 +24,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Collections;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -49,7 +51,7 @@ public class HelloController {
             }
             else if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"))) {
-                return "html/user-dashboard.html";
+                return "html/librarianHomePage.html";
             }
             else if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
@@ -57,7 +59,7 @@ public class HelloController {
                     return "html/userHaveCardHomePage.html";
                 }
                 else
-                return "html/user-dashboard.html";
+                return "html/userNoHaveCardHomePage.html";
             }
         }
         return "html/home.html";
@@ -122,7 +124,19 @@ public class HelloController {
         return "JavaScript/userHaveCardHomePage.js";
     }
     
-
+   @GetMapping("/JavaScript/userNoHaveCardHomePage.js")
+    public String userNoHaveCardHomePageJS() {
+        return "JavaScript/userNoHaveCardHomePage.js";
+    }
+    
+    @GetMapping("/css/librarianHomePage.css")
+    public String librarianHomePageCSS() {
+        return "css/librarianHomePage.css";
+    }
+    @GetMapping("/JavaScript/librarianHomePage.js")
+    public String librarianHomePageJS() {
+        return "JavaScript/librarianHomePage.js";
+    }
 }
     
 

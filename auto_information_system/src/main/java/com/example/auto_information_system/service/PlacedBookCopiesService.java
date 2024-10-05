@@ -14,6 +14,9 @@ public class PlacedBookCopiesService {
     @Autowired
     private PlacedBookCopiesRepository placedBookCopiesRepository;
     
+  
+    
+
     public List<PlacedBookCopies> getAllPlacedBookCopies() {
         return placedBookCopiesRepository.findAll();
     }

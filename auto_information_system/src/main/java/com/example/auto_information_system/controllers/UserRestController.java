@@ -55,7 +55,30 @@ public class UserRestController {
     }
 
 
-
+    @PostMapping("/user/updateUserLibCard")
+    public ResponseEntity<HttpStatus> updateUserLibCard(@RequestBody LibCards entity) {
+        try{
+            libCardsService.updateLibCard(entity);
+            return new ResponseEntity<>(HttpStatus.OK); 
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @PostMapping("/user/registerUserLibCard")
+    public ResponseEntity<HttpStatus> registerUserLibCard( Authentication authentication, @RequestBody LibCards entity) {
+        try{
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            Integer userId = userDetails.getId();
+            entity.setUser_id(userId);
+            libCardsService.saveLibCard(entity);
+            return new ResponseEntity<>(HttpStatus.OK); 
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     @PostMapping("/user/reserveBooks/{id}")
