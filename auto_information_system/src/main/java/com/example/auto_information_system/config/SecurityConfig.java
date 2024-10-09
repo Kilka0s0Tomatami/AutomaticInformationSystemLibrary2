@@ -24,6 +24,8 @@ public class SecurityConfig {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
+            
+            
 
             .authorizeHttpRequests(auth -> auth
                 // Разрешаем доступ к статическим ресурсам и страницам регистрации

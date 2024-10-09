@@ -17,16 +17,19 @@ public class BooksOnHands {
     @Column(nullable = false)
     private java.sql.Date return_date;
     private java.sql.Date refund_date;
+    @Column(nullable = false, name = "book_on_hand_status")
+    private int bookOnHandStatus;
 
     public BooksOnHands() {
     }
 
-    public BooksOnHands(int book_copy_id, int lib_card_id, java.sql.Date issue_date, java.sql.Date return_date, java.sql.Date refund_date) {
+    public BooksOnHands(int book_copy_id, int lib_card_id, java.sql.Date issue_date, java.sql.Date return_date, java.sql.Date refund_date, int book_on_hand_status) {
         this.book_copy_id = book_copy_id;
         this.libCardId = lib_card_id;
         this.issue_date = issue_date;
         this.return_date = return_date;
         this.refund_date = refund_date;
+        this.bookOnHandStatus = book_on_hand_status;
     }
 
     public int getBook_copy_id() {
@@ -67,5 +70,13 @@ public class BooksOnHands {
 
     public void setRefund_date(java.sql.Date refund_date) {
         this.refund_date = refund_date;
+    }
+
+    public int getBookOnHandStatus() {
+        return bookOnHandStatus;
+    }
+
+    public void setBookOnHandStatus(int book_on_hand_status) {
+        this.bookOnHandStatus = book_on_hand_status;
     }
 }

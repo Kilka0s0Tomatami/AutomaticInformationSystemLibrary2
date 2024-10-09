@@ -52,7 +52,7 @@ public class BookCopiesService {
             LocalDate newDate = localDate.plusMonths(1);// Добавляем 1 месяц
             Date updatedDate = Date.valueOf(newDate);// Преобразуем LocalDate обратно в java.sql.Date
 
-            BooksOnHands bookOnHands = new BooksOnHands(book.getBook_copy_id(), libCardId, currentDate, updatedDate, null);
+            BooksOnHands bookOnHands = new BooksOnHands(book.getBook_copy_id(), libCardId, currentDate, updatedDate, null, 1);
             booksOnHandsService.saveBookOnHands(bookOnHands); //добавление в таблицу books_on_hands
             
             placedBookCopiesService.deletePlacedBookCopies(book.getBook_copy_id()); //удаление из таблицы placed_book_copies

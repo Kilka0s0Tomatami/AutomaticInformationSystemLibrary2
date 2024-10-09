@@ -20,7 +20,9 @@ public class BooksOnHandsService {
     public List<BooksOnHands> getBooksOnHandsByLibCardId(Integer libCardId) {
         return booksOnHandsRepository.findByLibCardId(libCardId);
     }
-
+    public List<BooksOnHands> getReceivedBooksOnHandsByLibCardId(Integer libCardId) {
+        return booksOnHandsRepository.findByLibCardId(libCardId);
+    }
 
     public List<BooksOnHands> getAllBooksOnHands() {
         return booksOnHandsRepository.findAll();
@@ -36,5 +38,8 @@ public class BooksOnHandsService {
 
     public void deleteBookOnHands(Integer id) {
         booksOnHandsRepository.deleteById(id);
+    }
+    public void updateBookOnHandsStatus(BooksOnHands book) {
+        
     }
 }

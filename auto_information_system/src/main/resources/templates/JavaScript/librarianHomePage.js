@@ -59,9 +59,9 @@ document
 					'<p>Ошибка при поиске книг.</p>'
 			})
 	})
-	function issueBook(bookId) {
+	function issueBook(bookId,libCardId) {
 		// Отправляем запрос на сервер
-		fetch(`/api/issueBook/${bookId}`, {
+		fetch(`/librarian/issueBook/${bookId} ?libCardId=${libCardId}`, {
 			method: 'POST',
 		})
 			.then(response => response.json()) // Ожидаем ответ в формате JSON

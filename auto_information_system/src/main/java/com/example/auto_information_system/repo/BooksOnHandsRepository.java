@@ -15,4 +15,6 @@ import com.example.auto_information_system.model.BooksOnHands;
 @Repository
 public interface BooksOnHandsRepository extends JpaRepository<BooksOnHands, Integer> {
     List<BooksOnHands> findByLibCardId(Integer libCardId);
+
+    List<BooksOnHands> findByLibCardIdAndBookOnHandStatus(Integer libCardId , Integer BookOnHandStatus);
 }
