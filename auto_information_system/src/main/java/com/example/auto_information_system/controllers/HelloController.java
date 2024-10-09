@@ -47,22 +47,22 @@ public class HelloController {
             // Логика для ролей
             if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-                return "html/admin-dashboard.html";
+                return "admin-dashboard.html";
             }
             else if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"))) {
-                return "html/librarianHomePage.html";
+                return "librarianHomePage.html";
             }
             else if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
                 if (libCardsService.findByUserId(userId).isPresent()) {
-                    return "html/userHaveCardHomePage.html";
+                    return "userHaveCardHomePage.html";
                 }
                 else
-                return "html/userNoHaveCardHomePage.html";
+                return "userNoHaveCardHomePage.html";
             }
         }
-        return "html/home.html";
+        return "home.html";
     }
     @PostMapping("/register")
     public ResponseEntity<?> postMethodName(@RequestBody Users entity) {
@@ -75,7 +75,7 @@ public class HelloController {
     }
     @GetMapping("/login")
     public String loginPage() {
-        return "html/login.html";
+        return "login.html";
     }
    
 
@@ -105,7 +105,7 @@ public class HelloController {
     }
     @GetMapping("/register")
     public String registerPage() {
-        return "html/register.html";
+        return "register.html";
     }
     @GetMapping("/css/register.css")
     public String registerCSS() {

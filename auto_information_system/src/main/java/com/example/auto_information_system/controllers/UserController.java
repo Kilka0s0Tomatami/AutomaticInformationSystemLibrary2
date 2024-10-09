@@ -10,11 +10,11 @@ public class UserController {
 
     @GetMapping("/reserveBook")
     public String reserveBook() {
-        return "html/reserveBook.html";
+        return "reserveBook.html";
     }
     @GetMapping("/receivedBooks")
     public String receivedBooks() {
-        return "html/receivedBooks.html";
+        return "receivedBooks.html";
     }
 
 
