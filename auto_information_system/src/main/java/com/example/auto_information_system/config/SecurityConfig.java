@@ -29,7 +29,7 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
                 // Разрешаем доступ к статическим ресурсам и страницам регистрации
-                .requestMatchers("/", "/home", "/register", "/css/**", "/JavaScript/**", "/images/**").permitAll()
+                .requestMatchers("/", "/home", "/register", "/librarian/**", "/css/**", "/JavaScript/**", "/images/**").permitAll()
                 // Доступ к API только для пользователей с ролью ADMIN
                 .requestMatchers("/api/test/**").hasRole("ADMIN")
                 // Доступ ко всем остальным страницам только для авторизованных пользователей

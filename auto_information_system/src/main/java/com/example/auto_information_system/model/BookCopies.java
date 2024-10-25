@@ -21,8 +21,8 @@ public class BookCopies {
     @Column(name = "book_copy_status")
     private int bookCopyStatus;
 
-    @Column(nullable = false)
-    private int book_copy_fond_number;
+    @Column(nullable = false, name = "book_copy_fond_number")
+    private int bookCopyFondNumber;
 
 
     //конструкторы
@@ -32,7 +32,7 @@ public class BookCopies {
     public BookCopies(int book_edition_id, int book_copy_status, int book_copy_fond_number) {
         this.bookEditionId = book_edition_id;
         this.bookCopyStatus = book_copy_status;
-        this.book_copy_fond_number = book_copy_fond_number;
+        this.bookCopyFondNumber = book_copy_fond_number;
     }
 
 
@@ -61,12 +61,12 @@ public class BookCopies {
         this.bookCopyStatus = book_copy_status;
     }
 
-    public int getBook_copy_fond_number() {
-        return book_copy_fond_number;
+    public int getBookCopyFondNumber() {
+        return bookCopyFondNumber;
     }
 
-    public void setBook_copy_fond_number(int book_copy_fond_number) {
-        this.book_copy_fond_number = book_copy_fond_number;
+    public void setBookCopyFondNumber(int book_copy_fond_number) {
+        this.bookCopyFondNumber = book_copy_fond_number;
     }
 
 }

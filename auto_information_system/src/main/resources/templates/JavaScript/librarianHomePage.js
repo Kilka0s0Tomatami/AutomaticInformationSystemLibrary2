@@ -59,28 +59,63 @@ document
 					'<p>Ошибка при поиске книг.</p>'
 			})
 	})
-	function issueBook(bookId,libCardId) {
-		// Отправляем запрос на сервер
-		fetch(`/librarian/issueBook/${bookId} ?libCardId=${libCardId}`, {
+	// Функция для отображения модального окна и передачи ID книги
+function issueBook(bookId) {
+    const modal = document.getElementById("libCardModal");
+    const bookIdInput = document.getElementById("bookId");
+
+    // Открыть модальное окно
+    modal.style.display = "block";
+
+    // Установить ID книги в скрытое поле формы
+    bookIdInput.value = bookId;
+}
+
+// Закрытие модального окна
+document.querySelector(".close").onclick = function () {
+    document.getElementById("libCardModal").style.display = "none";
+};
+
+// Закрытие модального окна при клике вне его
+window.onclick = function (event) {
+    const modal = document.getElementById("libCardModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+};
+
+// Обработчик отправки формы для выдачи книги
+document.getElementById("issueForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const libCardId = document.getElementById("libCardId").value;
+    const bookId = document.getElementById("bookId").value;
+
+	const queryParams = new URLSearchParams({
+		bookEditionId: bookId,
+		libCardId: libCardId,
+		
+	})
+    // Отправляем POST-запрос на сервер
+    fetch(`/librarian/issueBook?${queryParams.toString()}`, {
 			method: 'POST',
 		})
-			.then(response => response.json()) // Ожидаем ответ в формате JSON
-			.then(data => {
-				// Очищаем блок для результатов перед отображением новых данных
+			.then(response => {
 				const resultsDiv = document.getElementById('searchResults')
 				resultsDiv.innerHTML = '' // Очистка предыдущих результатов
 
-				if (data.message === 'Book issued successfully!') {
-					// Если книга выдана успешно
+				if (response.ok) {
 					resultsDiv.innerHTML = '<p>Книга выдана успешно!</p>'
 				} else {
-					// Если книга не выдана успешно
-					resultsDiv.innerHTML = '<p>Книга не выдана успешно.</p>'
+					resultsDiv.innerHTML = '<p>Ошибка при выдаче книги.</p>'
 				}
+				// Закрыть модальное окно после успешной выдачи
+				document.getElementById('libCardModal').style.display = 'none'
 			})
 			.catch(error => {
-				console.error('Ошибка при выполнении поиска:', error)
+				console.error('Ошибка при выдаче книги:', error)
 				document.getElementById('searchResults').innerHTML =
-					'<p>Ошибка при поиске книг.</p>'
+					'<p>Ошибка при выдаче книги.</p>'
 			})
-	}
+});
+

@@ -55,7 +55,7 @@ public class BookCopiesService {
             BooksOnHands bookOnHands = new BooksOnHands(book.getBook_copy_id(), libCardId, currentDate, updatedDate, null, 1);
             booksOnHandsService.saveBookOnHands(bookOnHands); //добавление в таблицу books_on_hands
             
-            placedBookCopiesService.deletePlacedBookCopies(book.getBook_copy_id()); //удаление из таблицы placed_book_copies
+            
         }
         else {
             throw new RuntimeException("Book not found"); 

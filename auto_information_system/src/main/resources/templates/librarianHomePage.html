@@ -14,11 +14,11 @@
         <nav>
             <ul>
                 <li><a href="/" class="active">Подобрать экземпляр</a></li>
-                <li><a href="/reserveBook">Выдать Забронированный экземпляр</a></li>
-                <li><a href="/receivedBooks">Получить экземпляр</a></li>
-                <li><a href="/fines">Работа с изданиями</a></li>
-                <li><a href="/fines">Работа с экземлярами</a></li>
-                <li><a href="/fines">Управление билетами</a></li>
+                <li><a href="/issueReceivedBook">Выдать Забронированный экземпляр</a></li>
+                <li><a href="/acceptBook">Получить экземпляр</a></li>
+                <li><a href="/bookEditions">Работа с изданиями</a></li>
+                <li><a href="/bookCopies">Работа с экземлярами</a></li>
+                <li><a href="/libCards">Управление билетами</a></li>
                 <li><a href="/logout">Выйти</a></li>
             </ul>
         </nav>
@@ -52,6 +52,20 @@
 
     <h2>Результаты поиска:</h2>
     <div id="searchResults"></div>
+    
+    <!-- Модальное окно для ввода ID билета -->
+    <div id="libCardModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Введите ID билета для выдачи книги</h2>
+        <form id="issueForm">
+        <label for="libCardId">ID билета:</label>
+        <input type="number" id="libCardId" name="libCardId" required>
+        <input type="hidden" id="bookId" name="bookId">
+        <input type="submit" value="Выдать книгу">
+        </form>
+    </div>
+    </div>
 
    
 

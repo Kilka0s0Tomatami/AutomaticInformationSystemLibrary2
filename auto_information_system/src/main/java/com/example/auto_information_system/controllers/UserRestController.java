@@ -73,7 +73,7 @@ public class UserRestController {
 
 
     @PostMapping("/user/reserveBooks/{id}")
-    public ResponseEntity<HttpStatus> postMethodName(Authentication authentication, @PathVariable Integer id) {
+    public ResponseEntity<HttpStatus> reserveBookCopies(Authentication authentication, @PathVariable Integer id) {
         try {
             bookCopiesService.reserveBookCopies(id, superUserService.getUserLibCard(authentication).getLib_card_id());
             return new ResponseEntity<>(HttpStatus.OK);

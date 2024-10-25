@@ -10,7 +10,8 @@ import jakarta.persistence.Table;
 @Table(name = "placed_book_copies")
 public class PlacedBookCopies {
     @Id
-    private int book_copy_id;
+    @Column(name = "book_copy_id")
+    private int bookCopyId;
     @Column(nullable = false)
     private int cell_id;
 
@@ -18,16 +19,16 @@ public class PlacedBookCopies {
     }
 
     public PlacedBookCopies(int book_copy_id, int cell_id) {
-        this.book_copy_id = book_copy_id;
+        this.bookCopyId = book_copy_id;
         this.cell_id = cell_id;
     }
 
     public int getBook_copy_id() {
-        return book_copy_id;
+        return bookCopyId;
     }
 
     public void setBook_copy_id(int book_copy_id) {
-        this.book_copy_id = book_copy_id;
+        this.bookCopyId = book_copy_id;
     }
 
     public int getCell_id() {
