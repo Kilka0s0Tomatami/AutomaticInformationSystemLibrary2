@@ -82,7 +82,10 @@ public class LibrarianService {
     public void returnBookCopies(Integer bookCopyFondNumber) {
         BookCopies bookCopies = bookCopiesRepository.findByBookCopyFondNumber(bookCopyFondNumber);
         bookCopiesRepository.updateBookCopiesStatus(0, bookCopies.getBook_copy_id());
-        booksOnHandsService.deleteBookOnHands(bookCopies.getBook_copy_id());
+        BooksOnHands booksOnHands = booksOnHandsService.getBookOnHandsById(bookCopies.getBook_copy_id());
+        booksOnHands.setBookOnHandStatus(4);
+        booksOnHands.setRefundDate(java.sql.Date.valueOf(java.time.LocalDate.now()));
+        booksOnHandsService.saveBookOnHands(booksOnHands);
     }
     public void arrangeBookCopies(Integer bookCopyFondNumber, int cellId) {
         BookCopies bookCopies = bookCopiesRepository.findByBookCopyFondNumber(bookCopyFondNumber);

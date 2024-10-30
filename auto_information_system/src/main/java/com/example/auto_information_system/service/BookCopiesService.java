@@ -85,7 +85,7 @@ public class BookCopiesService {
             entity1.put("year_publication", bookEdition.getBook_edition_year_publication());
             entity1.put("status", status);
             entity1.put("issueDate", bookOnHands.getIssue_date());
-            entity1.put("returnDate", bookOnHands.getReturn_date());
+            entity1.put("returnDate", bookOnHands.getReturnDate());
             jsonResponse.add(entity1);
         }
         return jsonResponse;

@@ -42,4 +42,7 @@ public class BooksOnHandsService {
     public void updateBookOnHandsStatus(BooksOnHands book) {
         
     }
+    public List<BooksOnHands> getOverdueBooksOnHands() {
+        return booksOnHandsRepository.overdueRecords(new java.sql.Date(System.currentTimeMillis()));
+    }
 }

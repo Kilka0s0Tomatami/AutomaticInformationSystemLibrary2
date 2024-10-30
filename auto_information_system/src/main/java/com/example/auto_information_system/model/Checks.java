@@ -14,8 +14,8 @@ public class Checks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int check_id;
 
-    @Column(nullable = false)
-    private int lib_card_id;
+    @Column(nullable = false, name = "lib_card_id")
+    private int libCardId;
 
     @Column(nullable = false)
     private int book_copy_id;
@@ -29,7 +29,7 @@ public class Checks {
     }
 
     public Checks(int lib_card_id, int book_copy_id, java.sql.Date check_start_date, java.sql.Date check_finish_date) {
-        this.lib_card_id = lib_card_id;
+        this.libCardId = lib_card_id;
         this.book_copy_id = book_copy_id;
         this.check_start_date = check_start_date;
         this.check_finish_date = check_finish_date;
@@ -43,12 +43,12 @@ public class Checks {
         this.check_id = check_id;
     }
 
-    public int getLib_card_id() {
-        return lib_card_id;
+    public int getLibCardId() {
+        return libCardId;
     }
 
-    public void setLib_card_id(int lib_card_id) {
-        this.lib_card_id = lib_card_id;
+    public void setLibCardId(int lib_card_id) {
+        this.libCardId = lib_card_id;
     }
 
     public int getBook_copy_id() {
