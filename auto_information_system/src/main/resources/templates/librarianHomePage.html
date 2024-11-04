@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Читательский билет</title>
+    <link rel="stylesheet" href="css/librarianHomePage.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.png" alt="Лого библиотеки">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/" class="active">Подобрать экземпляр</a></li>
+                <li><a href="/issueReceivedBook">Выдать Забронированный экземпляр</a></li>
+                <li><a href="/acceptBook">Получить экземпляр</a></li>
+                <li><a href="/bookEditions">Работа с изданиями</a></li>
+                <li><a href="/bookCopies">Работа с экземлярами</a></li>
+                <li><a href="/libCards">Управление билетами</a></li>
+                <li><a href="/logout">Выйти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Контейнер для отображения и изменения читательского билета -->
+    <div class="container">
+        <h1>Поиск книги</h1>
+        <form id="searchForm">
+            <label for="author">Автор</label>
+            <input type="text" id="author" name="author" >
+
+            <label for="title">Название</label>
+            <input type="text" id="title" name="title" >
+
+            <label for="year">Год издания</label>
+            <input type="number" id="year" name="year" >
+
+            <label for="place">Место издания</label>
+            <input type="text" id="place" name="place">
+
+            <label for="udk">УДК</label>
+            <input type="text" id="udk" name="udk">
+
+            <label for="bbk">ББК</label>
+            <input type="text" id="bbk" name="bbk">
+
+            <input type="submit" value="Поиск">
+        </form>
+    </div>
+
+    <h2>Результаты поиска:</h2>
+    <div id="searchResults"></div>
+    
+    <!-- Модальное окно для ввода ID билета -->
+    <div id="libCardModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Введите ID билета для выдачи книги</h2>
+        <form id="issueForm">
+        <label for="libCardId">ID билета:</label>
+        <input type="number" id="libCardId" name="libCardId" required>
+        <input type="hidden" id="bookId" name="bookId">
+        <input type="submit" value="Выдать книгу">
+        </form>
+    </div>
+    </div>
+
+   
+
+    <script src="JavaScript/librarianHomePage.js"></script>
+</body>
+</html>
