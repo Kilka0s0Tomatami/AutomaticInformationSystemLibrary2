@@ -29,7 +29,13 @@ public interface BookCopiesRepository extends JpaRepository<BookCopies, Integer>
     Optional<List<Object[]>> findBookByEditionCardAndStatus(@Param("bookEditionId") int bookEditionId,
                                                         @Param("libCardId") int libCardId,
                                                         @Param("bookCopyStatus") int bookCopyStatus);
-
+    @Query("SELECT bc, boh FROM BookCopies bc JOIN BooksOnHands boh ON bc.book_copy_id = boh.book_copy_id " +
+       "WHERE boh.libCardId = :libCardId AND bc.bookCopyStatus = :bookCopyStatus")
+    Optional<List<Object[]>> findBookByCardAndStatus(
+                                                        @Param("libCardId") int libCardId,
+                                                        @Param("bookCopyStatus") int bookCopyStatus);
 
     BookCopies findByBookCopyFondNumber(int bookCopyFondNumber);
+    List<BookCopies> findByBookCopyStatus(int bookCopyStatus);
+    List<BookCopies> findByBookEditionId(int bookEditionId);
 }

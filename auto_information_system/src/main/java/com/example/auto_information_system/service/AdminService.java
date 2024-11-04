@@ -1,5 +1,7 @@
 package com.example.auto_information_system.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +24,9 @@ public class AdminService {
     public void updateUser(Users user) {
         usersRepository.save(user);     
     }
+    public List<Users> getAllUsers() 
+    {
+        return usersRepository.findAll();
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.auto_information_system.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,5 +92,18 @@ public class LibrarianService {
         BookCopies bookCopies = bookCopiesRepository.findByBookCopyFondNumber(bookCopyFondNumber);
         bookCopiesRepository.updateBookCopiesStatus(1, bookCopies.getBook_copy_id());
         placedBookCopiesService.savePlacedBookCopies(new PlacedBookCopies(bookCopies.getBook_copy_id(), cellId));
+    }
+    public List<Object[]>  getBooksByCardAndStatus(Integer userLibCardId, Integer bookCopyStatus) {
+        Optional<List<Object[]>> results = bookCopiesRepository.findBookByCardAndStatus(userLibCardId, bookCopyStatus);
+        return results.get();
+    }
+    public List<Map<String, Object>> getReceivedBooksByLibCardId(Integer userLibCardId) {
+        return bookCopiesService.getBooksOnHandsByLibCardId(userLibCardId);
+    }
+    public List<BookCopies> getBooksByBookCopyStatus(int bookCopyStatus) {
+        return bookCopiesRepository.findByBookCopyStatus(bookCopyStatus);
+    }
+    public List<BookCopies> getBooksByBookEdition(int BookEditionId) {
+        return bookCopiesRepository.findByBookEditionId(BookEditionId);
     }
 }

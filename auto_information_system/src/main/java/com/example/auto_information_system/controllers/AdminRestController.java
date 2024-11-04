@@ -88,5 +88,8 @@ public class AdminRestController {
     public List<Checks> getChecksByLibCardId(@RequestParam int libCardId) {
         return checksService.getChecksByLibCardId(libCardId);
     }
-    
+    @GetMapping("/admin/getAllUsers")
+    public List<Users> getAllUsers() {
+        return adminService.getAllUsers();
+    }
 }
