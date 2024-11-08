@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотечная система - Управление</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background-color: #34495e;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background-color: #3498db;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .admin-panel {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-right: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .user-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .user-item {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Библиотечная система</h1>
+        <nav class="nav-tabs">
+            <a href="/clientWork" class="nav-tab">Работа с клиентом</a>
+            <a href="/editionWork" class="nav-tab">Работа с изданиями</a>
+            <a href="/copyWork" class="nav-tab">Работа с копиями</a>
+            <a href="/administration" class="nav-tab active">Управление</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="admin-panel">
+            <button onclick="showAddUserForm()">Добавить нового пользователя</button>
+            <button onclick="loadUsers()">Изменить пользователя</button>
+            <button onclick="showAddStillageForm()">Добавить стеллаж</button>
+        </div>
+
+        <!-- Форма добавления пользователя -->
+        <div id="addUserForm" class="form-container hidden">
+            <h2>Добавление нового пользователя</h2>
+            <form onsubmit="addNewUser(event)">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Логин" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="user_password" placeholder="Пароль" required>
+                </div>
+                <div class="form-group">
+                    <select id="role_id" required>
+                        <option value="">Выберите роль</option>
+                        <option value="1">Роль 1</option>
+                        <option value="2">Роль 2</option>
+                        <option value="3">Роль 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Добавить</button>
+                    <button type="button" onclick="hideAddUserForm()">Отмена</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Список пользователей -->
+        <div id="userList" class="hidden">
+            <h2>Список пользователей</h2>
+            <div class="user-list"></div>
+        </div>
+
+        <!-- Форма изменения пользователя -->
+        <div id="editUserForm" class="form-container hidden">
+            <h2>Изменение пользователя</h2>
+            <form onsubmit="updateUser(event)">
+                <div class="form-group">
+                    <input type="text" id="edit_user_id" readonly>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="edit_username" placeholder="Логин" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="edit_user_password" placeholder="Пароль" required>
+                </div>
+                <div class="form-group">
+                    <select id="edit_role_id" required>
+                        <option value="">Выберите роль</option>
+                        <option value="1">Роль 1</option>
+                        <option value="2">Роль 2</option>
+                        <option value="3">Роль 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Сохранить</button>
+                    <button type="button" onclick="hideEditUserForm()">Отмена</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Форма добавления стеллажа -->
+        <div id="addStillageForm" class="form-container hidden">
+            <h2>Добавление стеллажа</h2>
+            <form onsubmit="addStillage(event)">
+                <div class="form-group">
+                    <input type="number" id="stillage_number" placeholder="Номер стеллажа" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="stillage_shelfs_count" placeholder="Количество полок" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" id="stillage_shelf_cells_count" placeholder="Количество ячеек в полке" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Добавить</button>
+                    <button type="button" onclick="hideAddStillageForm()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showAddUserForm() {
+            document.getElementById('addUserForm').classList.remove('hidden');
+            document.getElementById('userList').classList.add('hidden');
+            document.getElementById('editUserForm').classList.add('hidden');
+            document.getElementById('addStillageForm').classList.add('hidden');
+        }
+
+        function hideAddUserForm() {
+            document.getElementById('addUserForm').classList.add('hidden');
+        }
+
+        function showAddStillageForm() {
+            document.getElementById('addStillageForm').classList.remove('hidden');
+            document.getElementById('addUserForm').classList.add('hidden');
+            document.getElementById('userList').classList.add('hidden');
+            document.getElementById('editUserForm').classList.add('hidden');
+        }
+
+        function hideAddStillageForm() {
+            document.getElementById('addStillageForm').classList.add('hidden');
+        }
+
+        function addNewUser(event) {
+            event.preventDefault();
+            const formData = {
+                username: document.getElementById('username').value,
+                user_password: document.getElementById('user_password').value,
+                role_id: parseInt(document.getElementById('role_id').value)
+            };
+
+            fetch('/admin/addNewUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Пользователь успешно добавлен');
+                    hideAddUserForm();
+                    event.target.reset();
+                }
+            });
+        }
+
+        function loadUsers() {
+            fetch('/admin/getAllUsers')
+                .then(response => response.json())
+                .then(users => {
+                    document.getElementById('userList').classList.remove('hidden');
+                    document.getElementById('addUserForm').classList.add('hidden');
+                    document.getElementById('editUserForm').classList.add('hidden');
+                    document.getElementById('addStillageForm').classList.add('hidden');
+                    displayUsers(users);
+                });
+        }
+
+        function displayUsers(users) {
+            const userListDiv = document.querySelector('.user-list');
+            userListDiv.innerHTML = '';
+            users.forEach(user => {
+                const userDiv = document.createElement('div');
+                userDiv.className = 'user-item';
+                userDiv.innerHTML = `
+                    <div>
+                        <p>ID: ${user.user_id}</p>
+                        <p>Логин: ${user.username}</p>
+                        <p>Роль: ${user.role_id}</p>
+                    </div>
+                    <button onclick="editUser(${JSON.stringify(user).replace(/"/g, '&quot;')})">
+                        Изменить
+                    </button>
+                `;
+                userListDiv.appendChild(userDiv);
+            });
+        }
+
+        function editUser(user) {
+            document.getElementById('editUserForm').classList.remove('hidden');
+            document.getElementById('userList').classList.add('hidden');
+            
+            document.getElementById('edit_user_id').value = user.user_id;
+            document.getElementById('edit_username').value = user.username;
+            document.getElementById('edit_user_password').value = '';
+            document.getElementById('edit_role_id').value = user.role_id;
+        }
+
+        function hideEditUserForm() {
+            document.getElementById('editUserForm').classList.add('hidden');
+            document.getElementById('userList').classList.remove('hidden');
+        }
+
+        function updateUser(event) {
+            event.preventDefault();
+            const formData = {
+                user_id: parseInt(document.getElementById('edit_user_id').value),
+                username: document.getElementById('edit_username').value,
+                user_password: document.getElementById('edit_user_password').value,
+                role_id: parseInt(document.getElementById('edit_role_id').value)
+            };
+
+            fetch('/admin/updateUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Пользователь успешно обновлен');
+                    hideEditUserForm();
+                    loadUsers();
+                }
+            });
+        }
+
+        function addStillage(event) {
+            event.preventDefault();
+            const formData = {
+                stillage_number: parseInt(document.getElementById('stillage_number').value),
+                stillage_shelfs_count: parseInt(document.getElementById('stillage_shelfs_count').value),
+                stillage_shelf_cells_count: parseInt(document.getElementById('stillage_shelf_cells_count').value)
+            };
+
+            fetch('/admin/addStillage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Стеллаж успешно добавлен');
+                    hideAddStillageForm();
+                    event.target.reset();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
