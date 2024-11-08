@@ -72,8 +72,10 @@ public class LibrarianRestController {
         }
     }
     @PostMapping("/librarian/arrangeBookCopies")
-    public ResponseEntity<HttpStatus> arrangeBookCopies(@RequestParam Integer bookCopyFondNumber, @RequestParam Integer cellId){
+    public ResponseEntity<HttpStatus> arrangeBookCopies(@RequestBody Map<String, Integer> requestData) {
         try {
+            Integer bookCopyFondNumber = requestData.get("bookCopyFondNumber");
+            Integer cellId = requestData.get("cellId");
             librarianService.arrangeBookCopies(bookCopyFondNumber, cellId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
