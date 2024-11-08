@@ -62,7 +62,7 @@ public class UserRestController {
     @PostMapping("/user/registerUserLibCard")
     public ResponseEntity<HttpStatus> registerUserLibCard( Authentication authentication, @RequestBody LibCards entity) {
         try{
-            entity.setUser_id(superUserService.getUserIdByAuthentication(authentication));
+            entity.setUserId(superUserService.getUserIdByAuthentication(authentication));
             libCardsService.saveLibCard(entity);
             return new ResponseEntity<>(HttpStatus.OK); 
         }catch(Exception e){

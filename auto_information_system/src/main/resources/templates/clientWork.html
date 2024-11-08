@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотечная система</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background-color: #34495e;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background-color: #3498db;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .book-list {
+            margin: 20px 0;
+        }
+
+        .book-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-form {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button.secondary {
+            background-color: #95a5a6;
+        }
+
+        button.secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Библиотечная система</h1>
+        <nav class="nav-tabs">
+            <a href="#" class="nav-tab active">Работа с клиентом</a>
+            <a href="#" class="nav-tab">Работа с изданиями</a>
+            <a href="#" class="nav-tab">Работа с копиями</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Основная форма работы с клиентом -->
+        <div id="mainForm">
+            <h2>Работа с клиентом</h2>
+            <div class="search-form">
+                <div class="form-group">
+                    <input type="number" id="libCardId" placeholder="ID читательской карты">
+                    <button onclick="searchBooks()">Поиск</button>
+                </div>
+                <button onclick="showRegisterForm()" class="secondary">Зарегистрировать читательскую карту</button>
+            </div>
+        </div>
+
+        <!-- Форма регистрации карты -->
+        <div id="registerForm" class="hidden">
+            <h2>Регистрация читательской карты</h2>
+            <div class="search-form">
+                <form onsubmit="registerLibCard(event)">
+                    <div class="form-group">
+                        <input type="number" id="userId" placeholder="ID пользователя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="lib_card_first_name" placeholder="Имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="lib_card_second_name" placeholder="Фамилия" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="lib_card_father_name" placeholder="Отчество">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="lib_card_mobilephone_number" placeholder="Мобильный телефон">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="lib_card_homephone_number" placeholder="Домашний телефон">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Зарегистрировать</button>
+                        <button type="button" onclick="hideRegisterForm()" class="secondary">Назад</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Результаты поиска книг клиента -->
+        <div id="searchResults" class="hidden">
+            <div class="form-group">
+                <button onclick="backToMain()" class="secondary">Назад</button>
+                <button onclick="showBookSearch()">Подобрать читателю новую книгу</button>
+            </div>
+            <div id="booksList" class="book-list"></div>
+        </div>
+
+        <!-- Форма поиска книг -->
+        <div id="bookSearchForm" class="hidden">
+            <h2>Поиск книги</h2>
+            <div class="search-form">
+                <div class="form-group">
+                    <input type="text" id="author" placeholder="Автор">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="title" placeholder="Название">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="year" placeholder="Год">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="place" placeholder="Место">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="udk" placeholder="УДК">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="bbk" placeholder="ББК">
+                </div>
+                <div class="form-group">
+                    <button onclick="searchBookEdition()">Поиск</button>
+                    <button onclick="hideBookSearch()" class="secondary">Назад</button>
+                </div>
+            </div>
+            <div id="bookSearchResults" class="book-list"></div>
+        </div>
+    </div>
+    
+    <script>
+        function searchBooks() {
+            const libCardId = document.getElementById('libCardId').value;
+            fetch(`/librarian/getBooksOnHandsByLibCardId?libCardId=${libCardId}`)
+                .then(response => response.json())
+                .then(books => {
+                    document.getElementById('mainForm').classList.add('hidden');
+                    document.getElementById('searchResults').classList.remove('hidden');
+                    displayBooks(books);
+                });
+        }
+
+        function displayBooks(books) {
+            const booksListDiv = document.getElementById('booksList');
+            booksListDiv.innerHTML = '';
+            books.forEach(book => {
+                const bookDiv = document.createElement('div');
+                bookDiv.className = 'book-item';
+                bookDiv.innerHTML = `
+                    <p>Автор: ${book.author}</p>
+                    <p>Название: ${book.title}</p>
+                    <p>Год: ${book.year_publication}</p>
+                    <p>Номер фонда: ${book.fondNumber}</p>
+                    <p>Статус: ${book.status}</p>
+                    <p>Дата выдачи: ${book.issueDate}</p>
+                    <p>Дата возврата: ${book.returnDate}</p>
+                    ${getButtonByStatus(book)}
+                `;
+                booksListDiv.appendChild(bookDiv);
+            });
+        }
+
+        function getButtonByStatus(book) {
+            if (book.status === "Забронирована") {
+                return `<button onclick="issueBook(${book.bookEditionId})">Выдать</button>`;
+            } else if (book.status === "Выдана") {
+                return `<button onclick="returnBook(${book.fondNumber})">Принять/Вернуть книгу</button>`;
+            }
+            else if (book.status === "Возвращена") {
+                return `<p>Возвращена</p>`;
+            }
+            return '';
+        }
+
+        function issueBook(bookEditionId) {
+            const libCardId = document.getElementById('libCardId').value;
+            fetch(`/librarian/issueBook?bookEditionId=${bookEditionId}&libCardId=${libCardId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Ячейка для книги: ${data.cell_id}`);
+                searchBooks();
+            });
+        }
+
+        function returnBook(fondNumber) {
+            fetch(`/librarian/returnBookCopies?bookCopyFondNumber=${fondNumber}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(() => {
+                alert('Книга успешно возвращена');
+                searchBooks(); // Обновляем список книг
+            });
+        }
+
+        function searchBookEdition() {
+            const author = document.getElementById('author').value;
+            const title = document.getElementById('title').value;
+            const year = document.getElementById('year').value;
+            const place = document.getElementById('place').value;
+            const udk = document.getElementById('udk').value;
+            const bbk = document.getElementById('bbk').value;
+
+            const queryParams = new URLSearchParams({
+                author, title, year, place, udk, bbk
+            });
+
+            fetch(`/api/searchBookEdition?${queryParams.toString()}`)
+                .then(response => response.json())
+                .then(books => {
+                    displaySearchResults(books);
+                });
+        }
+
+        function displaySearchResults(books) {
+            const resultsDiv = document.getElementById('bookSearchResults');
+            resultsDiv.innerHTML = '';
+            books.forEach(book => {
+                const bookDiv = document.createElement('div');
+                bookDiv.className = 'book-item';
+                bookDiv.innerHTML = `
+                    <p><strong>Автор:</strong> ${book.book_edition_author}</p>
+                    <p><strong>Название:</strong> ${book.book_edition_title}</p>
+                    <p><strong>Год издания:</strong> ${book.book_edition_year_publication}</p>
+                    <p><strong>Место издания:</strong> ${book.book_edition_place_publication}</p>
+                    <p><strong>УДК:</strong> ${book.book_edition_udk_number}</p>
+                    <p><strong>ББК:</strong> ${book.book_edition_bbk_number}</p>
+                    <button onclick="issueBook(${book.book_edition_id})">Выдать</button>
+                `;
+                resultsDiv.appendChild(bookDiv);
+            });
+        }
+
+        function showRegisterForm() {
+            document.getElementById('mainForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        }
+
+        function hideRegisterForm() {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('mainForm').classList.remove('hidden');
+        }
+
+        function registerLibCard(event) {
+            event.preventDefault();
+            const formData = {
+                userId: parseInt(document.getElementById('userId').value),
+                lib_card_first_name: document.getElementById('lib_card_first_name').value,
+                lib_card_second_name: document.getElementById('lib_card_second_name').value,
+                lib_card_father_name: document.getElementById('lib_card_father_name').value,
+                lib_card_mobilephone_number: parseInt(document.getElementById('lib_card_mobilephone_number').value),
+                lib_card_homephone_number: parseInt(document.getElementById('lib_card_homephone_number').value)
+            };
+
+
+            fetch('/librarian/registerUserLibCard', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                alert('Карта успешно зарегистрирована');
+                hideRegisterForm();
+            });
+        }
+
+        function showBookSearch() {
+            document.getElementById('searchResults').classList.add('hidden');
+            document.getElementById('bookSearchForm').classList.remove('hidden');
+        }
+
+        function hideBookSearch() {
+            document.getElementById('bookSearchForm').classList.add('hidden');
+            document.getElementById('searchResults').classList.remove('hidden');
+        }
+
+        function backToMain() {
+            document.getElementById('searchResults').classList.add('hidden');
+            document.getElementById('mainForm').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

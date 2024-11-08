@@ -38,7 +38,7 @@ public class LibrarianRestController {
     @PostMapping("/librarian/issueBook")
     public Map<String, Object> issueBook(@RequestParam Integer bookEditionId, @RequestParam Integer libCardId){ 
         try {
-            
+            System.out.println("Errorы ");
             return librarianService.issueBookCopies(bookEditionId, libCardId);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -50,6 +50,9 @@ public class LibrarianRestController {
     @PostMapping("/librarian/registerUserLibCard")
     public ResponseEntity<HttpStatus> registerUserLibCard(@RequestBody LibCards entity) {
         try{
+            System.out.println(entity.getUserId());
+            System.out.println(entity.getLib_card_second_name());
+            System.out.println(entity.getLib_card_homephone_number());
             libCardsService.saveLibCard(entity);
             return new ResponseEntity<>(HttpStatus.OK); 
         }catch(Exception e){

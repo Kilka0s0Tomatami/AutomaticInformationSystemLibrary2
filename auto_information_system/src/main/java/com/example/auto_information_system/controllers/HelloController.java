@@ -77,7 +77,10 @@ public class HelloController {
     public String loginPage() {
         return "login.html";
     }
-   
+    @GetMapping("/administration")
+    public String administration() {
+        return "administration.html";
+    }
 
     @GetMapping("/css/home.css")
     public String homeCss() {
