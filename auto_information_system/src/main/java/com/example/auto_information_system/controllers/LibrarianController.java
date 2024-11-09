@@ -5,8 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LibrarianController {
-    @GetMapping("/issueReceivedBook")
-    public String loginPage() {
-        return "issueReceivedBook.html";
+    @GetMapping("/clientWork")
+    public String clientWork() {
+        return "clientWork.html";
+    }
+    @GetMapping("/editionWork")
+    public String editionWork() {
+        return "editionWork.html";
+    }
+    @GetMapping("/copyWork")
+    public String copyWork() {
+        return "copyWork.html";
     }
 }

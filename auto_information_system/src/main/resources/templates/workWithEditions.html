@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотечная система</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 0.5rem;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background-color: #34495e;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background-color: #3498db;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .search-form, .edition-form {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .main-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button.secondary {
+            background-color: #95a5a6;
+        }
+
+        button.secondary:hover {
+            background-color: #7f8c8d;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .edition-list {
+            margin: 20px 0;
+        }
+
+        .edition-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .edition-item button {
+            margin-top: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Библиотечная система</h1>
+        <nav class="nav-tabs">
+            <a href="/workWithClient" class="nav-tab">Работа с клиентом</a>
+            <a href="/workWithEditions" class="nav-tab active">Работа с изданиями</a>
+            <a href="/workWithCopy" class="nav-tab">Работа с копиями</a>
+            <a href="/administration" class="nav-tab">Управление</a>
+            <a href="/logout" class="nav-tab">Выйти</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Основной интерфейс -->
+        <div id="mainInterface">
+            <h2>Работа с изданиями</h2>
+            <div class="main-buttons">
+                <button onclick="showAddForm()">Добавить издание</button>
+                <button onclick="showSearchInterface()">Изменить издание</button>
+            </div>
+        </div>
+
+        <!-- Форма добавления издания -->
+        <div id="addEditionForm" class="hidden">
+            <h2>Добавление издания</h2>
+            <div class="edition-form">
+                <form onsubmit="addEdition(event)">
+                    <div class="form-group">
+                        <label class="required">Название (Заглавие)</label>
+                        <input type="text" id="book_edition_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Автор</label>
+                        <input type="text" id="book_edition_author" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Год публикации</label>
+                        <input type="number" id="book_edition_year_publication" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Место публикации</label>
+                        <input type="text" id="book_edition_place_publication" required>
+                    </div>
+                    <div class="form-group">
+                        <label>УДК</label>
+                        <input type="text" id="book_edition_udk_number">
+                    </div>
+                    <div class="form-group">
+                        <label>ББК</label>
+                        <input type="text" id="book_edition_bbk_number">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Сохранить</button>
+                        <button type="button" class="secondary" onclick="backToMain()">Назад</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Интерфейс поиска для изменения -->
+        <div id="searchInterface" class="hidden">
+            <h2>Поиск издания для изменения</h2>
+            <div class="search-form">
+                <div class="form-group">
+                    <input type="text" id="searchAuthor" placeholder="Автор">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="searchTitle" placeholder="Название">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="searchYear" placeholder="Год">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="searchPlace" placeholder="Место">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="searchUdk" placeholder="УДК">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="searchBbk" placeholder="ББК">
+                </div>
+                <div class="form-actions">
+                    <button onclick="searchEditions()">Поиск</button>
+                    <button class="secondary" onclick="backToMain()">Назад</button>
+                </div>
+            </div>
+            <div id="searchResults" class="edition-list"></div>
+        </div>
+
+        <!-- Форма изменения издания -->
+        <div id="editEditionForm" class="hidden">
+            <h2>Изменение издания</h2>
+            <div class="edition-form">
+                <form onsubmit="updateEdition(event)">
+                    <div class="form-group">
+                        <label>ID издания</label>
+                        <input type="text" id="edit_book_edition_id" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Название (Заглавие)</label>
+                        <input type="text" id="edit_book_edition_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Автор</label>
+                        <input type="text" id="edit_book_edition_author" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Год публикации</label>
+                        <input type="number" id="edit_book_edition_year_publication" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required">Место публикации</label>
+                        <input type="text" id="edit_book_edition_place_publication" required>
+                    </div>
+                    <div class="form-group">
+                        <label>УДК</label>
+                        <input type="text" id="edit_book_edition_udk_number">
+                    </div>
+                    <div class="form-group">
+                        <label>ББК</label>
+                        <input type="text" id="edit_book_edition_bbk_number">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Сохранить изменения</button>
+                        <button type="button" class="secondary" onclick="backToSearch()">Назад</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showAddForm() {
+            document.getElementById('mainInterface').classList.add('hidden');
+            document.getElementById('addEditionForm').classList.remove('hidden');
+        }
+
+        function showSearchInterface() {
+            document.getElementById('mainInterface').classList.add('hidden');
+            document.getElementById('searchInterface').classList.remove('hidden');
+        }
+
+        function backToMain() {
+            document.getElementById('addEditionForm').classList.add('hidden');
+            document.getElementById('searchInterface').classList.add('hidden');
+            document.getElementById('mainInterface').classList.remove('hidden');
+        }
+
+        function backToSearch() {
+            document.getElementById('editEditionForm').classList.add('hidden');
+            document.getElementById('searchInterface').classList.remove('hidden');
+        }
+
+        function addEdition(event) {
+            event.preventDefault();
+            const formData = {
+                book_edition_title: document.getElementById('book_edition_title').value,
+                book_edition_author: document.getElementById('book_edition_author').value,
+                book_edition_year_publication: parseInt(document.getElementById('book_edition_year_publication').value),
+                book_edition_place_publication: document.getElementById('book_edition_place_publication').value,
+                book_edition_udk_number: document.getElementById('book_edition_udk_number').value,
+                book_edition_bbk_number: document.getElementById('book_edition_bbk_number').value
+            };
+
+            fetch('/librarian/addBookEdition', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Издание успешно добавлено');
+                    backToMain();
+                }
+            });
+        }
+
+        function searchEditions() {
+            const queryParams = new URLSearchParams({
+                author: document.getElementById('searchAuthor').value,
+                title: document.getElementById('searchTitle').value,
+                year: document.getElementById('searchYear').value,
+                place: document.getElementById('searchPlace').value,
+                udk: document.getElementById('searchUdk').value,
+                bbk: document.getElementById('searchBbk').value
+            });
+
+            fetch(`/api/searchBookEdition?${queryParams.toString()}`)
+                .then(response => response.json())
+                .then(editions => {
+                    displaySearchResults(editions);
+                });
+        }
+
+        function displaySearchResults(editions) {
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = '';
+            editions.forEach(edition => {
+                const editionDiv = document.createElement('div');
+                editionDiv.className = 'edition-item';
+                editionDiv.innerHTML = `
+                    <p><strong>Название:</strong> ${edition.book_edition_title}</p>
+                    <p><strong>Автор:</strong> ${edition.book_edition_author}</p>
+                    <p><strong>Год издания:</strong> ${edition.book_edition_year_publication}</p>
+                    <p><strong>Место издания:</strong> ${edition.book_edition_place_publication}</p>
+                    <p><strong>УДК:</strong> ${edition.book_edition_udk_number || 'Не указан'}</p>
+                    <p><strong>ББК:</strong> ${edition.book_edition_bbk_number || 'Не указан'}</p>
+                    <button onclick="showEditForm(${JSON.stringify(edition).replace(/"/g, '&quot;')})">
+                        Изменить
+                    </button>
+                `;
+                resultsDiv.appendChild(editionDiv);
+            });
+        }
+
+        function showEditForm(edition) {
+            document.getElementById('searchInterface').classList.add('hidden');
+            document.getElementById('editEditionForm').classList.remove('hidden');
+
+            document.getElementById('edit_book_edition_id').value = edition.book_edition_id;
+            document.getElementById('edit_book_edition_title').value = edition.book_edition_title;
+            document.getElementById('edit_book_edition_author').value = edition.book_edition_author;
+            document.getElementById('edit_book_edition_year_publication').value = edition.book_edition_year_publication;
+            document.getElementById('edit_book_edition_place_publication').value = edition.book_edition_place_publication;
+            document.getElementById('edit_book_edition_udk_number').value = edition.book_edition_udk_number;
+            document.getElementById('edit_book_edition_bbk_number').value = edition.book_edition_bbk_number;
+        }
+
+        function updateEdition(event) {
+            event.preventDefault();
+            const formData = {
+                book_edition_id: document.getElementById('edit_book_edition_id').value,
+                book_edition_title: document.getElementById('edit_book_edition_title').value,
+                book_edition_author: document.getElementById('edit_book_edition_author').value,
+                book_edition_year_publication: parseInt(document.getElementById('edit_book_edition_year_publication').value),
+                book_edition_place_publication: document.getElementById('edit_book_edition_place_publication').value,
+                book_edition_udk_number: document.getElementById('edit_book_edition_udk_number').value,
+                book_edition_bbk_number: document.getElementById('edit_book_edition_bbk_number').value
+            };
+
+            fetch('/librarian/addBookEdition', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Издание успешно обновлено');
+                    backToSearch();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

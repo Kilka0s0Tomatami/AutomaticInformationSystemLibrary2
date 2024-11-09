@@ -70,16 +70,20 @@ public class BookCopiesService {
             BookCopies bookCopies = this.getBookCopiesById(bookOnHands.getBook_copy_id());
             BookEditions bookEdition = bookEditionService.getBookEditionById(bookCopies.getBookEditionId());
             String status = null;
-            if (bookCopies.getBookCopyStatus()==2) {
+            if (bookOnHands.getBookOnHandStatus()==1) {
                 status = "Забронирована";
             }
-            else if (bookCopies.getBookCopyStatus()==3) {
-                status = "Взята";
+            else if (bookOnHands.getBookOnHandStatus()==2) {
+                status = "Выдана";
             }
-            else if (bookCopies.getBookCopyStatus()==4) {
+            else if (bookOnHands.getBookOnHandStatus()==3) {
+                status = "Просрочена";
+            }
+            else if (bookOnHands.getBookOnHandStatus()==4) {
                 status = "Возвращена";
             }
             Map<String, Object> entity1 = new HashMap<>();
+            entity1.put("bookEditionId", bookEdition.getBook_edition_id());
             entity1.put("author", bookEdition.getBook_edition_author());
             entity1.put("title", bookEdition.getBook_edition_title());
             entity1.put("year_publication", bookEdition.getBook_edition_year_publication());

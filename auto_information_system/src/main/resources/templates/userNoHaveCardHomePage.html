@@ -4,44 +4,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Читательский билет</title>
-    <link rel="stylesheet" href="css/userHaveCardHomePage.css">
+    <style> 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background-color: #34495e;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background-color: #3498db;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="images/logo.png" alt="Лого библиотеки">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/" class="active">Зарегистрировать читательский билет</a></li>
-                <li><a href="/logout">Выйти</a></li>
-            </ul>
+    <header class="header">
+        <h1>Библиотечная система</h1>
+        <nav class="nav-tabs">
+            <a href="/" class="nav-tab active">Зарегистрировать читательский билет</a>
+            <a href="/logout" class="nav-tab">Выйти</a>
         </nav>
     </header>
 
-    <!-- Контейнер для отображения и изменения читательского билета -->
     <div class="container">
-        <h1>Зарегистрировать читательский билет</h1>
+        <h2>Регистрация читательского билета</h2>
         <form id="ticketForm">
-            <label for="firstName">Имя</label>
-            <input type="text" id="firstName" name="firstName" required>
-
-            <label for="lastName">Фамилия</label>
-            <input type="text" id="lastName" name="lastName" required>
-
-            <label for="middleName">Отчество</label>
-            <input type="text" id="middleName" name="middleName">
-
-            <label for="phoneNumber">Номер телефона</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber">
-
-            <label for="homePhone">Домашний номер</label>
-            <input type="tel" id="homePhone" name="homePhone">
-
-            <input type="submit" value="Зарегистрировать билет">
+            <div class="form-group">
+                <label for="firstName" class="required">Имя</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName" class="required">Фамилия</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="middleName">Отчество</label>
+                <input type="text" id="middleName" name="middleName">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Номер телефона</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber">
+            </div>
+            <div class="form-group">
+                <label for="homePhone">Домашний номер</label>
+                <input type="tel" id="homePhone" name="homePhone">
+            </div>
+            <div class="form-actions">
+                <button type="submit">Зарегистрировать билет</button>
+            </div>
         </form>
     </div>
 
-    <script src="JavaScript/userNoHaveCardHomePage.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document
+                .getElementById('ticketForm')
+                .addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    const formData = {
+                        lib_card_first_name: document.getElementById('firstName').value,
+                        lib_card_second_name: document.getElementById('lastName').value,
+                        lib_card_father_name: document.getElementById('middleName').value,
+                        lib_card_mobilephone_number: document.getElementById('phoneNumber').value,
+                        lib_card_homephone_number: document.getElementById('homePhone').value,
+                    };
+
+                    if (!formData.lib_card_first_name || !formData.lib_card_second_name) {
+                        alert('Имя и фамилия не могут быть пустыми.');
+                        return;
+                    }
+
+                    fetch('/user/registerUserLibCard', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = '/';
+                        } else {
+                            alert('Ошибка при обновлении данных.');
+                        }
+                    })
+                    .catch(error => console.error('Ошибка при обновлении данных:', error));
+                });
+        });
+    </script>
 </body>
 </html>

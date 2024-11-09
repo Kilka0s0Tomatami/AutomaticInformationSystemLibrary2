@@ -16,7 +16,10 @@ public class UserController {
     public String receivedBooks() {
         return "receivedBooks.html";
     }
-
+    @GetMapping("/fines")
+    public String fines() {
+        return "fines.html";
+    }
 
 
 

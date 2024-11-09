@@ -4,29 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Библиотека</title>
-    <link rel="stylesheet" href="css/home.css">
+    <style> 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background-color: #34495e;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background-color: #3498db;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="images/logo.png" alt="Лого библиотеки">
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/login" >Войти</a></li>
-                <li><a href="/register">Зарегистрироваться</a></li>
-                <li><a href="/books">Наши книги</a></li>
-            </ul>
+    <header class="header">
+        <h1>Библиотека</h1>
+        <nav class="nav-tabs">
+            <a href="/login" class="nav-tab">Войти</a>
+            <a href="/register" class="nav-tab">Зарегистрироваться</a>
         </nav>
     </header>
 
     <main>
-        <section class="welcome">
-            <h1>Добро пожаловать в нашу библиотеку!</h1>
-            <p>Здесь вы можете найти самые интересные книги и зарегистрироваться для получения доступа ко всему каталогу.</p>
-        </section>
+        <div class="container">
+            <section class="welcome">
+                <h2>Добро пожаловать в нашу библиотеку!</h2>
+                <p>Здесь вы можете найти самые интересные книги и зарегистрироваться для получения доступа ко всему каталогу.</p>
+            </section>
+        </div>
     </main>
-
-    <script src="JavaScript/home.js"></script>
 </body>
 </html>

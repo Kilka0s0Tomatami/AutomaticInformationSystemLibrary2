@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.auto_information_system.model.Checks;
 import com.example.auto_information_system.model.LibCards;
 import com.example.auto_information_system.service.BookCopiesService;
-
+import com.example.auto_information_system.service.ChecksService;
 import com.example.auto_information_system.service.LibCardsService;
 import com.example.auto_information_system.super_service.SuperUserService;
 
@@ -30,6 +31,8 @@ public class UserRestController {
     private BookCopiesService bookCopiesService;
     @Autowired
     private SuperUserService superUserService;
+    @Autowired
+    ChecksService checksService;
 
     @GetMapping("/user/getUserLibCard")
     public LibCards loginPage(Authentication authentication) {
@@ -62,7 +65,7 @@ public class UserRestController {
     @PostMapping("/user/registerUserLibCard")
     public ResponseEntity<HttpStatus> registerUserLibCard( Authentication authentication, @RequestBody LibCards entity) {
         try{
-            entity.setUser_id(superUserService.getUserIdByAuthentication(authentication));
+            entity.setUserId(superUserService.getUserIdByAuthentication(authentication));
             libCardsService.saveLibCard(entity);
             return new ResponseEntity<>(HttpStatus.OK); 
         }catch(Exception e){
@@ -81,6 +84,26 @@ public class UserRestController {
             System.out.println("Error: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/api/payChecks")
+    public ResponseEntity<HttpStatus> closeChecks(@RequestParam int check_id) {
+        try {
+            checksService.closeChecks(check_id);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/api/getChecksByLibCardId")
+    public List<Checks> getChecksByLibCardId(@RequestParam int libCardId) {
+        return checksService.getChecksByLibCardId(libCardId);
+    }
+    @GetMapping("/getChecks")
+    public List<Checks> checkChecks(Authentication authentication) {
+        return getChecksByLibCardId(superUserService.getUserLibCard(authentication).getLib_card_id());
     }
 
 }
