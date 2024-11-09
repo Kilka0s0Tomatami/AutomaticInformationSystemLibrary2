@@ -47,11 +47,11 @@ public class HelloController {
             // Логика для ролей
             if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-                return "admin-dashboard.html";
+                return "administration.html";
             }
             else if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_LIBRARIAN"))) {
-                return "librarianHomePage.html";
+                return "clientWork.html";
             }
             else if (authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
@@ -77,10 +77,7 @@ public class HelloController {
     public String loginPage() {
         return "login.html";
     }
-    @GetMapping("/administration")
-    public String administration() {
-        return "administration.html";
-    }
+    
 
     @GetMapping("/css/home.css")
     public String homeCss() {
@@ -94,6 +91,16 @@ public class HelloController {
     public void logo(HttpServletResponse response) {
          try { 
             InputStream fileInputStream= new FileInputStream("auto_information_system\\src\\main\\resources\\templates\\images\\logo.png"); 
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE); 
+            StreamUtils.copy(fileInputStream,response.getOutputStream()); 
+        } catch(Exception e) { 
+            e.printStackTrace(); 
+        } 
+    }
+    @GetMapping("/images/logo1.png")
+     public void logo1(HttpServletResponse response) {
+         try { 
+            InputStream fileInputStream= new FileInputStream("auto_information_system\\src\\main\\resources\\templates\\images\\logo1.png"); 
             response.setContentType(MediaType.IMAGE_JPEG_VALUE); 
             StreamUtils.copy(fileInputStream,response.getOutputStream()); 
         } catch(Exception e) { 

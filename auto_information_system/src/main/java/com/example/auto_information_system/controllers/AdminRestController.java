@@ -73,21 +73,7 @@ public class AdminRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/admin/payChecks")
-    public ResponseEntity<HttpStatus> closeChecks(@RequestParam int check_id) {
-        try {
-            checksService.closeChecks(check_id);
-            return new ResponseEntity<>(HttpStatus.OK);
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping("/admin/getChecksByLibCardId")
-    public List<Checks> getChecksByLibCardId(@RequestParam int libCardId) {
-        return checksService.getChecksByLibCardId(libCardId);
-    }
+    
     @GetMapping("/admin/getAllUsers")
     public List<Users> getAllUsers() {
         return adminService.getAllUsers();

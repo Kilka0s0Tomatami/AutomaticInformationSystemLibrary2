@@ -3,6 +3,7 @@ package com.example.auto_information_system.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.auto_information_system.model.BookEditions;
+import com.example.auto_information_system.model.Checks;
 import com.example.auto_information_system.service.BookEditionService;
+import com.example.auto_information_system.service.ChecksService;
 
 @RestController
 public class APIRestController {
     @Autowired
     BookEditionService bookEditionService;
-    
+    @Autowired
+    ChecksService checksService;
 
     @PostMapping("/api/AddBookEdition")
     public ResponseEntity<BookEditions> AddBookEdition(@RequestBody BookEditions entity) {
@@ -39,4 +43,5 @@ public class APIRestController {
                                                 @RequestParam(required = false) String bbk) {
         return bookEditionService.searchBooks(author, title, year, place, udk, bbk);
     }
+    
 }
