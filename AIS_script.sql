@@ -5,8 +5,6 @@ create table stillages(
     stillage_shelf_cells_count int not null
 );
 
-
-
 create table shelfs(
     shelf_id serial primary key,
     shelf_number int not null,
@@ -52,7 +50,7 @@ create index index_book_edition_bbk_numbers on book_editions (book_edition_bbk_n
 create table book_copies(
     book_copy_id serial primary key,
     book_edition_id int not null,
-    book_copy_status int,
+    book_copy_status int not null,
     book_copy_fond_number int not null unique,
     foreign key (book_edition_id) references book_editions (book_edition_id) on delete cascade
 );
@@ -93,24 +91,25 @@ create index index_user_logins on users(user_login);
 
 
 
-create table lib_cars(
+create table lib_cards(
     lib_card_id serial primary key,
     user_id int not null unique,
     lib_card_first_name varchar(255) not null,
     lib_card_second_name varchar(255) not null,
     lib_card_father_name varchar(255),
-    lib_card_mobilephone_numner int,
+    lib_card_mobilephone_number int,
     lib_card_homephone_number int,
     foreign key(user_id) references users (user_id) on delete cascade
 );
 
-create index index_lib_card_user_id on lib_cars(user_id);
+create index index_lib_card_user_id on lib_cards(user_id);
 
 
 
 create table books_on_hands(
     book_copy_id int not null,
     lib_card_id int not null,
+    book_on_hand_status int not null,
     issue_date date not null,
     return_date date not null,
     refund_date date
